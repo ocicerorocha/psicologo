@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cícero Rocha · Psicólogo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F5F7FB;--bg2:#EBF0F8;--bg3:#DDE5F2;
+  --text:#1A1C2E;--text2:#4A5070;--text3:#8A92B2;
+  --accent:#2855A0;--accent2:#3A6BC8;--accent-light:#E8EFFE;
+  --coral:#C4521A;--coral-light:#F7EDE6;
+  --border:rgba(40,85,160,0.1);--border2:rgba(40,85,160,0.22);
+  --serif:'DM Serif Display',serif;--sans:'DM Sans',sans-serif;
+  --radius:14px;--radius-sm:8px;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+
+.page.active .hero{animation:fadeUp .6s ease both}
+.page.active .stats-bar{animation:fadeUp .6s .12s ease both}
+.page.active .section{animation:fadeUp .5s .18s ease both}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(245,247,251,.94);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:0 40px;display:flex;align-items:center;justify-content:space-between;height:62px}
+.nav-logo{font-family:var(--serif);font-size:20px;color:var(--text);text-decoration:none;letter-spacing:-.3px}
+.nav-tabs{display:flex;gap:4px;background:var(--bg2);padding:4px;border-radius:12px;border:1px solid var(--border)}
+.nav-tab{font-size:13px;font-weight:400;color:var(--text2);padding:6px 18px;border-radius:9px;cursor:pointer;border:none;background:transparent;font-family:var(--sans);transition:all .2s;letter-spacing:-.1px}
+.nav-tab:hover{color:var(--text);background:rgba(40,85,160,.07)}
+.nav-tab.active{background:white;color:var(--accent);box-shadow:0 1px 4px rgba(40,85,160,.12);font-weight:500}
+
+.page{display:none}.page.active{display:block}
+
+.hero{padding:80px 40px 64px;max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 210px;gap:56px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--accent);background:var(--accent-light);padding:4px 14px;border-radius:20px;margin-bottom:20px;letter-spacing:.2px;border:1px solid rgba(40,85,160,.15)}
+.hero-eyebrow::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite}
+h1{font-family:var(--serif);font-size:46px;line-height:1.12;color:var(--text);margin-bottom:16px;letter-spacing:-.5px}
+h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:16px;color:var(--text2);line-height:1.65;margin-bottom:20px;font-weight:300}
+
+.hero-rotator{min-height:52px;overflow:hidden;margin-bottom:28px;position:relative}
+.rotator-line{position:absolute;width:100%;font-size:14px;color:var(--text3);font-weight:400;line-height:1.6;opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease;padding:6px 12px;background:var(--bg2);border-radius:var(--radius-sm);border-left:3px solid var(--accent)}
+.rotator-line.active{opacity:1;transform:translateY(0)}
+
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.btn-primary{background:var(--accent);color:white;padding:12px 26px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .2s,transform .15s,box-shadow .2s;box-shadow:0 2px 12px rgba(40,85,160,.25)}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 4px 18px rgba(40,85,160,.32)}
+.btn-secondary{background:transparent;color:var(--text2);padding:12px 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:400;border:1px solid var(--border2);cursor:pointer;font-family:var(--sans);text-decoration:none;transition:all .2s}
+.btn-secondary:hover{background:var(--bg2);color:var(--text);border-color:var(--accent)}
+
+.hero-photo{width:210px;height:250px;border-radius:16px;background:var(--bg3);border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:12px;text-align:center;padding:16px;line-height:1.5}
+
+.stats-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2)}
+.stats-inner{max-width:960px;margin:0 auto;padding:0 40px;display:grid;grid-template-columns:repeat(3,1fr)}
+.stat-item{padding:24px 0;border-right:1px solid var(--border);padding-right:40px;padding-left:40px}
+.stat-item:first-child{padding-left:0}.stat-item:last-child{border-right:none}
+.stat-n{font-family:var(--serif);font-size:30px;color:var(--accent);line-height:1;margin-bottom:6px;letter-spacing:-.5px}
+.stat-l{font-size:12px;color:var(--text2);line-height:1.5}
+.stat-src{font-size:10px;color:var(--text3);margin-top:4px}
+
+.section{max-width:960px;margin:0 auto;padding:64px 40px;border-bottom:1px solid var(--border)}
+.section:last-child{border-bottom:none}
+.section-label{font-size:11px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent);margin-bottom:12px;opacity:.7}
+h2{font-family:var(--serif);font-size:34px;color:var(--text);margin-bottom:8px;letter-spacing:-.3px;line-height:1.2}
+.section-sub{font-size:16px;color:var(--text2);font-weight:300;margin-bottom:36px;max-width:560px;line-height:1.65}
+
+.cards-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cards-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+.card{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:22px;transition:border-color .2s,transform .2s,box-shadow .2s}
+.card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 6px 24px rgba(40,85,160,.1)}
+.card h3{font-size:15px;font-weight:500;color:var(--text);margin-bottom:7px;letter-spacing:-.2px}
+.card p{font-size:13px;color:var(--text2);line-height:1.6}
+
+.steps{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;background:white;margin-top:8px}
+.step{padding:24px 16px;text-align:center;border-right:1px solid var(--border)}
+.step:last-child{border-right:none}
+.step-n{font-family:var(--serif);font-size:28px;color:var(--accent);opacity:.28;line-height:1;margin-bottom:8px}
+.step-t{font-size:12px;font-weight:500;color:var(--text);line-height:1.4}
+
+.ab-card{background:var(--accent-light);border:1px solid var(--border);border-radius:var(--radius);padding:20px}
+.ab-title{font-size:13px;font-weight:500;color:var(--accent);margin-bottom:6px}
+.ab-desc{font-size:12px;color:var(--text2);line-height:1.6}
+
+.testimonials{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.testimonial{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:22px;position:relative}
+.testimonial::before{content:'"';font-family:var(--serif);font-size:52px;color:var(--accent);opacity:.12;position:absolute;top:8px;left:16px;line-height:1}
+.test-text{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:14px;padding-top:10px;font-style:italic}
+.test-author{font-size:12px;font-weight:500;color:var(--text)}
+.test-date{font-size:11px;color:var(--text3);margin-top:2px}
+.test-stars{color:var(--accent);font-size:12px;letter-spacing:1px;margin-bottom:8px}
+
+.nr-card{border:2px solid var(--coral);border-radius:var(--radius);padding:24px;margin-bottom:16px;background:var(--coral-light)}
+.nr-card h3{font-family:var(--serif);font-size:22px;color:var(--text);margin-bottom:8px;letter-spacing:-.3px}
+.nr-card p{font-size:14px;color:var(--text2);line-height:1.65}
+
+.tag{display:inline-flex;align-items:center;font-size:11px;font-weight:500;padding:3px 11px;border-radius:20px;margin-bottom:14px;letter-spacing:.1px}
+.tag-blue{background:var(--accent-light);color:var(--accent);border:1px solid var(--border)}
+.tag-coral{background:var(--coral-light);color:var(--coral)}
+.tag-gray{background:var(--bg2);color:var(--text2);border:1px solid var(--border)}
+.tag-purple{background:#EEF0FB;color:#3D44A8}
+
+.imersao-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-top:16px}
+.imersao-card h3{font-family:var(--serif);font-size:26px;margin-bottom:8px;margin-top:10px;letter-spacing:-.3px}
+.imersao-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.pillar{background:white;border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 14px;font-size:12px;color:var(--text2)}
+
+.form-wrap{background:white;border:1px solid var(--border);border-radius:var(--radius);padding:28px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-field{margin-bottom:16px}
+label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:6px;letter-spacing:.1px}
+input,select,textarea{width:100%;border:1px solid var(--border2);border-radius:var(--radius-sm);padding:10px 12px;font-size:14px;background:var(--bg);color:var(--text);font-family:var(--sans);outline:none;transition:border-color .2s,background .2s;-webkit-appearance:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);background:white;box-shadow:0 0 0 3px rgba(40,85,160,.08)}
+textarea{resize:vertical;min-height:90px}
+.checkbox-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.checkbox-item{display:flex;align-items:center;gap:9px;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:all .15s;background:var(--bg);user-select:none}
+.checkbox-item:hover{border-color:var(--accent);background:var(--accent-light)}
+.checkbox-item.checked{border-color:var(--coral);background:var(--coral-light)}
+.checkbox-item.checked .cb-label{color:var(--coral)}
+.cb-box{width:15px;height:15px;border:1px solid var(--border2);border-radius:3px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:white;transition:all .15s}
+.checkbox-item.checked .cb-box{background:var(--coral);border-color:var(--coral)}
+.cb-check{display:none}.checkbox-item.checked .cb-check{display:block}
+.cb-label{font-size:13px;color:var(--text2)}
+
+.sobre-grid{display:grid;grid-template-columns:190px 1fr;gap:48px;align-items:start}
+.sobre-photo{width:190px;height:190px;border-radius:50%;border:1.5px dashed var(--border2);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:11px;text-align:center;padding:16px;line-height:1.5;background:var(--bg2)}
+.sobre-text h2{font-family:var(--serif);font-size:34px;letter-spacing:-.5px;margin-bottom:16px;line-height:1.15}
+.sobre-text h2 em{font-style:italic;color:var(--accent)}
+.sobre-text p{font-size:15px;color:var(--text2);line-height:1.7;font-weight:300;margin-bottom:14px}
+.creds{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px}
+
+.cta-section{background:var(--accent);padding:64px 40px}
+.cta-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:40px}
+.cta-text h2{font-family:var(--serif);font-size:34px;color:white;letter-spacing:-.3px;margin-bottom:8px}
+.cta-text p{font-size:15px;color:rgba(255,255,255,.72);font-weight:300}
+.btn-white{background:white;color:var(--accent);padding:13px 28px;border-radius:var(--radius-sm);font-size:14px;font-weight:500;border:none;cursor:pointer;font-family:var(--sans);white-space:nowrap;text-decoration:none;transition:opacity .2s,transform .15s;display:inline-block;box-shadow:0 2px 12px rgba(0,0,0,.15)}
+.btn-white:hover{opacity:.92;transform:translateY(-1px)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40px}
+.footer-inner{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.footer-left{font-size:13px;color:var(--text3)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{font-size:13px;color:var(--text3);text-decoration:none;transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+
+@media(max-width:768px){
+  nav{padding:0 20px}
+  .nav-tab{padding:5px 10px;font-size:12px}
+  .hero{grid-template-columns:1fr;padding:48px 20px 40px;gap:32px}
+  .hero-photo{width:100%;height:160px;border-radius:12px}
+  h1{font-size:32px}
+  .stats-inner{grid-template-columns:1fr}
+  .stat-item{border-right:none;border-bottom:1px solid var(--border);padding:20px 0}
+  .stat-item:last-child{border-bottom:none}
+  .section{padding:48px 20px}
+  h2{font-size:26px}
+  .cards-2,.cards-3,.testimonials{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .sobre-grid{grid-template-columns:1fr}
+  .sobre-photo{margin:0 auto}
+  .form-row{grid-template-columns:1fr}
+  .checkbox-grid{grid-template-columns:1fr}
+  .imersao-pillars{grid-template-columns:1fr}
+  .cta-inner{flex-direction:column;text-align:center}
+  .cta-section{padding:48px 20px}
+  footer{padding:20px}
+  .footer-inner{flex-direction:column;gap:12px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo" onclick="showPage('pessoas');return false">Cícero Rocha</a>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="showPage('pessoas')">Para pessoas</button>
+    <button class="nav-tab" onclick="showPage('empresas')">Para empresas</button>
+    <button class="nav-tab" onclick="showPage('sobre')">Sobre</button>
+  </div>
+</nav>
+
+<!-- PESSOAS -->
+<div id="page-pessoas" class="page active">
+
+  <section class="hero">
+    <div class="hero-text">
+      <div class="hero-eyebrow">Psicólogo · CRP 03/26378</div>
+      <h1>Já estive dos dois lados.<br><em>Isso muda o atendimento.</em></h1>
+      <p class="hero-sub">No RH, vendo o que as empresas esperam das pessoas. Na clínica, ouvindo o que as pessoas carregam do trabalho.</p>
+      <div class="hero-rotator" id="rotator-pessoas">
+        <div class="rotator-line active">Atendimento online para adultos com demandas ligadas ao trabalho.</div>
+        <div class="rotator-line">Colaborador, empreendedor, autônomo, freelancer — o trabalho pesa de formas diferentes para cada um.</div>
+        <div class="rotator-line">Burnout, transição de carreira, sobrecarga, orientação profissional.</div>
+        <div class="rotator-line">Sessões de 50 minutos. Conversa inicial gratuita.</div>
+      </div>
+      <div class="hero-actions">
+        <a href="https://calendar.google.com" target="_blank" class="btn-primary">Agendar conversa inicial →</a>
+        <a href="#como-funciona" class="btn-secondary">Como funciona</a>
+      </div>
+    </div>
+    <div class="hero-photo">sua foto aqui</div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-n">546 mil</div>
+        <div class="stat-l">afastamentos por saúde mental em 2025 — novo recorde histórico</div>
+        <div class="stat-src">Ministério da Previdência Social, 2026</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">26,8%</div>
+        <div class="stat-l">da população brasileira convive com algum grau de transtorno de ansiedade</div>
+        <div class="stat-src">Pesquisa Covitel, 2024</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n">80%</div>
+        <div class="stat-l">dos casos, o próprio trabalho é citado como principal fonte de estresse</div>
+        <div class="stat-src">Pesquisa global Sodexo</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Para quem é</div>
+    <h2>Se o trabalho está pesando,<br>você está no lugar certo</h2>
+    <p class="section-sub">A NR-01 tornou obrigatória a gestão de riscos psicossociais nas empresas desde maio de 2025. O cenário exige atenção dos dois lados: a empresa tem sua parte, e você tem a sua.</p>
+    <div class="cards-2">
+      <div class="card">
+        <h3>Burnout e esgotamento</h3>
+        <p>Para quem trabalha demais e sente culpa em descansar: colaborador, empreendedor ou autônomo.</p>
+      </div>
+      <div class="card">
+        <h3>Transição de carreira</h3>
+        <p>Mudança de área, saída de CLT, início de negócio próprio — decisões que envolvem muito mais do que o currículo.</p>
+      </div>
+      <div class="card">
+        <h3>Performance e pressão</h3>
+        <p>Dificuldade de foco, procrastinação, medo de falhar. Funciona igual para quem tem chefe e para quem é o próprio chefe.</p>
+      </div>
+      <div class="card">
+        <h3>Orientação profissional</h3>
+        <p>Clareza sobre habilidades, possibilidades e como se posicionar — seja num emprego, num negócio ou numa carreira nova.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="como-funciona" class="section">
+    <div class="section-label">Como funciona</div>
+    <h2>Simples do primeiro contato às sessões</h2>
+    <p class="section-sub">A conversa inicial é gratuita — serve para entender sua demanda e verificar se há identificação antes de qualquer compromisso.</p>
+    <div class="steps">
+      <div class="step"><div class="step-n">01</div><div class="step-t">Conversa inicial gratuita</div></div>
+      <div class="step"><div class="step-n">02</div><div class="step-t">Cadastro e disponibilidade</div></div>
+      <div class="step"><div class="step-n">03</div><div class="step-t">Pagamento</div></div>
+      <div class="step"><div class="step-n">04</div><div class="step-t">Sessões de 50 min online</div></div>
+      <div class="step"><div class="step-n">05</div><div class="step-t">Acompanhamento</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">O que você encontra</div>
+    <div class="cards-2">
+      <div class="card"><h3>Espaço seguro e sigiloso</h3><p>Sigilo rigoroso. O que acontece na sessão fica na sessão.</p></div>
+      <div class="card"><h3>Ferramentas práticas</h3><p>Autoconhecimento e técnicas que funcionam fora da sessão também.</p></div>
+      <div class="card"><h3>Processo sem burocracia</h3><p>Pagamento facilitado, lembretes automáticos e confirmação de consulta.</p></div>
+      <div class="card"><h3>Atendimento 100% online</h3><p>De qualquer lugar, no horário que cabe na sua rotina.</p></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Abordagem</div>
+    <h2>Como trabalho</h2>
+    <div class="cards-3" style="margin-top:14px">
+      <div class="ab-card"><div class="ab-title">TCC</div><div class="ab-desc">Terapia Cognitivo-Comportamental como base — foco em padrões de pensamento e comportamento.</div></div>
+      <div class="ab-card"><div class="ab-title">Psicologia positiva</div><div class="ab-desc">Estudos da ciência da felicidade e suas metodologias para o bem-estar.</div></div>
+      <div class="ab-card"><div class="ab-title">PNL</div><div class="ab-desc">Programação Neurolinguística como ferramenta complementar de autoconhecimento.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Depoimentos</div>
+    <h2>O que dizem os pacientes</h2>
+    <div class="testimonials">
+      <div class="testimonial">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">Cícero é atencioso, respeitoso e te deixa confortável para falar.</p>
+        <div class="test-author">Jean</div>
+        <div class="test-date">Fevereiro de 2026</div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">Profissional extremamente educado e atencioso. Me senti muito acolhida na primeira sessão. Me senti confortável pra ser sincera sem receios.</p>
+        <div class="test-author">Ana</div>
+        <div class="test-date">Janeiro de 2026</div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">Um profissional maravilhoso, muito sábio nas palavras e ajuda muito a pensarmos diferente.</p>
+        <div class="test-author">Nariany</div>
+        <div class="test-date">Novembro de 2025</div>
+      </div>
+      <div class="testimonial">
+        <div class="test-stars">★★★★★</div>
+        <p class="test-text">Um bom profissional com uma experiência incrível. Faz um bom trabalho.</p>
+        <div class="test-author">Marcelo</div>
+        <div class="test-date">Dezembro de 2025</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Pronto para começar?</h2>
+        <p>A conversa inicial é gratuita e sem compromisso.</p>
+      </div>
+      <a href="https://calendar.google.com" target="_blank" class="btn-white">Agendar conversa inicial →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- EMPRESAS -->
+<div id="page-empresas" class="page">
+
+  <section class="hero" style="grid-template-columns:1fr">
+    <div class="hero-text">
+      <div class="hero-eyebrow" style="background:var(--coral-light);color:var(--coral);border-color:rgba(196,82,26,.2)">Para empresas</div>
+      <h1>RH que funciona — <em>personalizado ao que você precisa</em></h1>
+      <p class="hero-sub">Hoje existe software para tudo. Ferramenta não é mais o problema. O desafio é o que vem junto: pessoas, processos, cultura e treinamento. Isso a gente resolve — e ainda entregamos <strong>a tecnologia que sustenta</strong>.</p>
+      <div class="hero-rotator" id="rotator-empresas">
+        <div class="rotator-line active" style="border-left-color:var(--coral)">Para micro e pequenas empresas que cresceram sem estrutura de RH.</div>
+        <div class="rotator-line" style="border-left-color:var(--coral)">Para PJs e autônomos que precisam de processos e ferramentas sem burocracia.</div>
+        <div class="rotator-line" style="border-left-color:var(--coral)">Para quem precisa se adequar à NR-01 sem saber por onde começar.</div>
+        <div class="rotator-line" style="border-left-color:var(--coral)">Serviço pontual ou recorrente — você escolhe o formato.</div>
+      </div>
+      <div class="hero-actions">
+        <a href="#diagnostico" class="btn-primary" style="background:var(--coral);box-shadow:0 2px 12px rgba(196,82,26,.3)">Agendar diagnóstico →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-n" style="color:var(--coral)">25%</div>
+        <div class="stat-l">das empresas brasileiras já automatizam processos de RH — a maioria não sabe por onde começar</div>
+        <div class="stat-src">Sólides</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n" style="color:var(--coral)">-48%</div>
+        <div class="stat-l">de erros manuais com processos e tarefas bem definidos</div>
+        <div class="stat-src">ADP Work Insight Report, 2020</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-n" style="color:var(--coral)">+31%</div>
+        <div class="stat-l">de produtividade em equipes com bem-estar elevado</div>
+        <div class="stat-src">Universidade da Califórnia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Serviços</div>
+    <h2>O que posso fazer<br>pela sua empresa</h2>
+
+    <div class="nr-card" style="margin-top:14px">
+      <span class="tag tag-coral" style="margin-bottom:10px">NR-01 · em vigor desde maio de 2025</span>
+      <h3>Gestão de riscos psicossociais</h3>
+      <p>A atualização da NR-01 exige que empresas identifiquem, avaliem e gerenciem riscos psicossociais — estresse, assédio, sobrecarga, conflitos. Quem não se adequar está sujeito a multas. Faço o diagnóstico, o plano de ação e o acompanhamento.</p>
+    </div>
+
+    <div class="cards-2">
+      <div class="card"><h3>Diagnóstico organizacional</h3><p>Cultura, clima, processos e papéis. Entender antes de agir.</p></div>
+      <div class="card"><h3>Recrutamento e seleção</h3><p>Processo completo — triagem, entrevistas, dinâmicas e feedbacks.</p></div>
+      <div class="card"><h3>Treinamentos</h3><p>Formação de times, liderança, bem-estar e saúde mental no trabalho.</p></div>
+      <div class="card"><h3>Cargos e salários</h3><p>Estruturação de planos, trilhas de carreira e critérios claros.</p></div>
+      <div class="card"><h3>Processos e protocolos</h3><p>Fluxos, onboarding, políticas internas e padronização. Quando necessário, entrego também a ferramenta tecnológica que suporte o processo — integrada ao que você já usa ou construída do zero.</p></div>
+      <div class="card"><h3>People analytics</h3><p>Indicadores de RH, pesquisas internas e relatórios para tomada de decisão.</p></div>
+      <div class="card"><h3>Tecnologia aplicada ao RH</h3><p>Da estruturação do processo à ferramenta que o sustenta. Automações, formulários, dashboards e sistemas simples para tornar o RH do dia a dia mais eficiente — mesmo sem time de TI.</p></div>
+    </div>
+
+    <div class="imersao-card">
+      <span class="tag tag-purple" style="margin-bottom:8px">Imersão organizacional · Recorrente</span>
+      <h3>Um RH pra você,<br>sem ser seu</h3>
+      <p style="font-size:14px;color:var(--text2);line-height:1.65;margin-top:8px">Serviço personalizado e contínuo para empresas que precisam de estrutura de RH mas não têm. Atuação próxima, com agenda regular, para construir pessoas, processos e cultura de dentro pra fora. Isso inclui, quando faz sentido, a entrega de ferramentas tecnológicas que sustentem o que foi estruturado.</p>
+      <div class="imersao-pillars">
+        <div class="pillar">Diagnóstico inicial</div>
+        <div class="pillar">Agenda mensal fixa</div>
+        <div class="pillar">Relatórios e entregas</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="diagnostico" class="section">
+    <div class="section-label">Como contratar</div>
+    <h2>Começa por aqui</h2>
+    <p class="section-sub">Preencha o formulário e agendamos uma sessão de diagnóstico gratuita. As informações abaixo ajudam a direcionar melhor essa conversa.</p>
+    <div class="form-wrap">
+      <div class="form-field"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
+      <div class="form-field"><label>Empresa</label><input type="text" placeholder="Nome da empresa"></div>
+      <div class="form-row">
+        <div class="form-field"><label>Tamanho da equipe</label>
+          <select><option>Só eu (PJ / autônomo)</option><option>2 a 10 pessoas</option><option>11 a 50 pessoas</option><option>Mais de 50</option></select>
+        </div>
+        <div class="form-field"><label>Tem RH hoje?</label>
+          <select><option>Não tem</option><option>Tem, mas é informal</option><option>Tem time estruturado</option></select>
+        </div>
+      </div>
+      <div class="form-field">
+        <label>O que está buscando resolver? <span style="font-weight:400;color:var(--text3)">(pode marcar mais de um)</span></label>
+        <div class="checkbox-grid">
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Adequação à NR-01</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Recrutamento e seleção</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Estruturação de processos</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Treinamentos</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">RH recorrente (Imersão)</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Cargos e salários</span></div>
+          <div class="checkbox-item" onclick="toggle(this)"><div class="cb-box"><svg class="cb-check" width="9" height="9" viewBox="0 0 9 9"><polyline points="1,4.5 3.5,7 8,2" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="cb-label">Outro / não sei ainda</span></div>
+        </div>
+      </div>
+      <div class="form-field" style="margin-top:16px"><label>Mensagem (opcional)</label><textarea placeholder="Conte um pouco mais sobre o momento da empresa..."></textarea></div>
+      <div style="margin-top:20px">
+        <button class="btn-primary" style="background:var(--coral);box-shadow:0 2px 12px rgba(196,82,26,.3);width:100%;justify-content:center">Enviar e agendar diagnóstico →</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- SOBRE -->
+<div id="page-sobre" class="page">
+  <div class="section" style="padding-top:72px">
+    <div class="sobre-grid">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <div class="sobre-photo">sua foto aqui</div>
+      </div>
+      <div class="sobre-text">
+        <h2>Psicólogo e gente <em>como você</em></h2>
+        <p style="margin-top:12px">Divido minha atuação entre o RH e a clínica. E isso muda tudo.</p>
+        <p>De um lado, vejo o que as empresas esperam das pessoas: os processos, as pressões, as expectativas que raramente chegam ao colaborador de forma clara. Do outro, ouço o que as pessoas carregam do trabalho: o esgotamento, as dúvidas, a sensação de estar no lugar errado ou no limite.</p>
+        <p>Essa visão dupla muda a forma como atendo. Quando alguém chega com uma insatisfação profissional — seja colaborador, empreendedor ou autônomo — consigo ajudar a entender não só o que está sentindo, mas as possibilidades reais diante da situação. Como se posicionar, quais habilidades desenvolver, o que faz sentido para aquela pessoa naquele momento.</p>
+        <p>Não é sobre saber mais do que o paciente. É sobre conhecer as duas perspectivas e usar isso para conciliar os interesses.
+        </p>
+        <p>Porque vida pessoal e profissional não se separam. Uma fortalece a outra — e é exatamente isso que aparece nas sessões.</p>
+        <div class="creds" style="margin-top:20px">
+          <span class="tag tag-gray" style="margin:0">CRP 03/26378</span>
+          <span class="tag tag-gray" style="margin:0">TCC — PUC/PR</span>
+          <span class="tag tag-gray" style="margin:0">Saúde 4.0 — PUCPR</span>
+          <span class="tag tag-gray" style="margin:0">Happiness Agents — Cazulo</span>
+          <span class="tag tag-gray" style="margin:0">PNL — Instituto PROSER</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-inner">
+      <div class="cta-text">
+        <h2>Vamos conversar?</h2>
+        <p>Seja para atendimento ou para um projeto de RH.</p>
+      </div>
+      <a href="https://calendar.google.com" target="_blank" class="btn-white">Agendar uma conversa →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-left">Cícero Rocha · CRP 03/26378 · Salvador, BA</div>
+    <div class="footer-links">
+      <a href="#">Instagram</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">WhatsApp</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  const idx=['pessoas','empresas','sobre'].indexOf(p);
+  document.querySelectorAll('.nav-tab')[idx].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function toggle(el){el.classList.toggle('checked')}
+
+function startRotator(id){
+  const lines=document.querySelectorAll('#'+id+' .rotator-line');
+  let cur=0;
+  setInterval(()=>{
+    lines[cur].classList.remove('active');
+    cur=(cur+1)%lines.length;
+    lines[cur].classList.add('active');
+  },3200);
+}
+
+startRotator('rotator-pessoas');
+startRotator('rotator-empresas');
+</script>
+
+</body>
+</html>
